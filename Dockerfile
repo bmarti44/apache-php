@@ -1,6 +1,8 @@
 FROM ubuntu:trusty
 MAINTAINER Fernando Mayo <fernando@tutum.co>
 
+RUN usermod -u 1000 www-data
+
 # Install base packages
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -yq install \
@@ -25,10 +27,6 @@ ENV ALLOW_OVERRIDE **False**
 ADD run.sh /run.sh
 RUN chmod 755 /*.sh
 
-# Configure /app folder with sample app
-RUN mkdir -p /app && rm -fr /var/www/html && ln -s /app /var/www/html
-ADD sample/ /app
-
 EXPOSE 80
-WORKDIR /app
+WORKDIR /var/www/html
 CMD ["/run.sh"]
