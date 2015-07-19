@@ -9,6 +9,10 @@ else
     a2enmod rewrite
 fi
 
-#source /etc/apache2/envvars
+sed -i "s/export APACHE_RUN_USER=www-data/#export APACHE_RUN_USER=www-data/g" /etc/apache2/envvars
+sed -i "s/export APACHE_RUN_USER=www-data/#export APACHE_RUN_USER=www-data/g" /etc/apache2/envvar
+
+source /etc/apache2/envvars
+
 tail -F /var/log/apache2/* &
 exec apache2 -D FOREGROUND

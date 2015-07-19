@@ -1,5 +1,5 @@
-FROM ubuntu:trusty
-MAINTAINER Fernando Mayo <fernando@tutum.co>
+FROM ubuntu:14.04
+MAINTAINER Brian Martin <brian@brianmartin.com>
 
 # Install base packages
 RUN apt-get update && \
@@ -12,7 +12,8 @@ RUN apt-get update && \
         php5-gd \
         php5-curl \
         php-pear \
-        php-apc && \
+        php-apc \
+        nano && \
     rm -rf /var/lib/apt/lists/* && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN /usr/sbin/php5enmod mcrypt
