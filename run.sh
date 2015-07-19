@@ -1,8 +1,6 @@
 #!/bin/bash
-
-usermod -u 1000 www-data
  
-chown www-data:www-data /var/www/html -R
+chown quickstart:quickstart /var/www/html -R
 
 if [ "$ALLOW_OVERRIDE" = "**False**" ]; then
     unset ALLOW_OVERRIDE

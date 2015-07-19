@@ -1,8 +1,6 @@
 FROM ubuntu:trusty
 MAINTAINER Fernando Mayo <fernando@tutum.co>
 
-RUN usermod -u 1000 www-data
-
 # Install base packages
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -yq install \
@@ -22,6 +20,10 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
     sed -i "s/variables_order.*/variables_order = \"EGPCS\"/g" /etc/php5/apache2/php.ini
 
 ENV ALLOW_OVERRIDE **False**
+ENV APACHE_RUN_USER quickstart
+ENV APACHE_RUN_GROUP quickstart
+RUN adduser --uid 1000 --gecos 'Drupal Quick Start' --disabled-password quickstart \
+             && chown -R "$APACHE_RUN_USER:$APACHE_RUN_GROUP" /var/lock/apache2 /var/run/apache2
 
 # Add image configuration and scripts
 ADD run.sh /run.sh
@@ -29,4 +31,5 @@ RUN chmod 755 /*.sh
 
 EXPOSE 80
 WORKDIR /var/www/html
+
 CMD ["/run.sh"]
